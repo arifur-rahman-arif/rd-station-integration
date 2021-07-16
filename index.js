@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const fs = require("fs");
 const { google } = require("googleapis");
 const { authorizeGoogleSheet, googleClient } = require("./sheetAuthorization");
 
@@ -75,29 +74,33 @@ const sendDataToSheet = async (rquiredData) => {
 
     if (!rquiredData) return console.trace(`No data found at ${rquiredData}`);
 
-    // Get the sheet object
-    const sheets = google.sheets({ version: "v4", auth: googleClient });
-
     rquiredData.forEach((data) => {
-        const sheetInsertOptions = {
-            spreadsheetId: "1Gu8Lseeekr33yoLGuu6qfh-mAQxgg487sPSkx4io5Qo",
-            range: "AS IN SCRIPT!A2:T",
-            valueInputOption: "USER_ENTERED",
-            responseValueRenderOption: "FORMATTED_VALUE",
-            resource: {
-                values: [insertionValuesForSheet(data)],
-                majorDimension: "ROWS",
-            },
-        };
-
-        sheets.spreadsheets.values.append(sheetInsertOptions).then((res, err) => {
-            if (err) return console.trace(err);
-
-            if (res.status == 200) {
-                console.trace("data inserted in sheet");
-            }
-        });
+        insertDataIntoSheet(data);
     });
+};
+
+const insertDataIntoSheet = async (data) => {
+    const sheets = google.sheets({ version: "v4", auth: googleClient });
+    const sheetInsertOptions = {
+        spreadsheetId: "1Gu8Lseeekr33yoLGuu6qfh-mAQxgg487sPSkx4io5Qo",
+        range: "AS IN SCRIPT!A2:T",
+        valueInputOption: "USER_ENTERED",
+        responseValueRenderOption: "FORMATTED_VALUE",
+        insertDataOption: "INSERT_ROWS",
+        resource: {
+            values: [insertionValuesForSheet(data)],
+            majorDimension: "ROWS",
+        },
+    };
+
+    try {
+        const sheetResponse = await sheets.spreadsheets.values.append(sheetInsertOptions);
+        if (sheetResponse.status == 200) {
+            console.trace("data inserted in sheet");
+        }
+    } catch (err) {
+        console.trace(err);
+    }
 };
 
 const insertionValuesForSheet = (data) => {
@@ -127,4 +130,4 @@ const insertionValuesForSheet = (data) => {
     return insertionValues;
 };
 
-// lt -p 3000 -s rdstationapitesting123
+// lt -p 3000 -s rdstationapitesting12345

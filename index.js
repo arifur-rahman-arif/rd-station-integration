@@ -40,21 +40,25 @@ app.post("/bulk-integration", customParser, (req, res) => {
 
             let savedData = [];
 
-            if (data) {
+            if (typeof data != undefined && typeof data != null) {
                 savedData = JSON.parse(data);
-            }
 
-            savedData.push(requiredData[0]);
+                savedData.push(requiredData[0]);
 
-            try {
-                fs.writeFile("data.json", JSON.stringify(savedData), function (error, response) {
-                    if (error) {
-                        return console.trace(err);
-                    }
-                    console.trace("data stored successfully");
-                });
-            } catch (error) {
-                console.trace(error);
+                try {
+                    fs.writeFile(
+                        "data.json",
+                        JSON.stringify(savedData),
+                        function (error, response) {
+                            if (error) {
+                                return console.trace(err);
+                            }
+                            console.trace("data stored successfully");
+                        }
+                    );
+                } catch (error) {
+                    console.trace(error);
+                }
             }
         });
     } catch (error) {

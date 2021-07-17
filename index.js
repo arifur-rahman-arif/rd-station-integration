@@ -32,26 +32,34 @@ app.post("/rd-station", customParser, (req, res) => {
 app.post("/bulk-integration", customParser, (req, res) => {
     let requiredData = organizeData(req.body);
 
-    fs.readFile("data.json", "utf8", function (err, data) {
-        if (err) {
-            return console.trace(err);
-        }
-
-        let savedData = [];
-
-        if (data) {
-            savedData = JSON.parse(data);
-        }
-
-        savedData.push(requiredData[0]);
-
-        fs.writeFile("data.json", JSON.stringify(savedData), function (error, response) {
-            if (error) {
+    try {
+        fs.readFile("data.json", "utf8", function (err, data) {
+            if (err) {
                 return console.trace(err);
             }
-            console.trace("data stored successfully");
+
+            let savedData = [];
+
+            if (data) {
+                savedData = JSON.parse(data);
+            }
+
+            savedData.push(requiredData[0]);
+
+            try {
+                fs.writeFile("data.json", JSON.stringify(savedData), function (error, response) {
+                    if (error) {
+                        return console.trace(err);
+                    }
+                    console.trace("data stored successfully");
+                });
+            } catch (error) {
+                console.trace(error);
+            }
         });
-    });
+    } catch (error) {
+        console.trace(error);
+    }
 
     res.status(200).end();
 });
@@ -229,22 +237,26 @@ const sendBulkDataToSheet = async (res) => {
 };
 
 const bulkInsertionDataArray = () => {
-    let data = fs.readFileSync("data.json", "utf8");
+    try {
+        let data = fs.readFileSync("data.json", "utf8");
 
-    let savedData = [];
+        let savedData = [];
 
-    if (data) {
-        savedData = JSON.parse(data);
-    }
+        if (data) {
+            savedData = JSON.parse(data);
+        }
 
-    let formattedArray = [];
+        let formattedArray = [];
 
-    if (savedData) {
-        savedData.forEach((lead) => {
-            formattedArray.push(insertionValuesForSheet(lead));
-        });
+        if (savedData) {
+            savedData.forEach((lead) => {
+                formattedArray.push(insertionValuesForSheet(lead));
+            });
 
-        return formattedArray;
+            return formattedArray;
+        }
+    } catch (error) {
+        console.trace(error);
     }
 };
 

@@ -197,8 +197,8 @@ const sendBulkDataToSheet = async (res) => {
 
     const sheets = google.sheets({ version: "v4", auth: googleClient });
     const sheetInsertOptions = {
-        spreadsheetId: "1P8IO9GiBqyrjfP_CMGHYE_sQiOAMk-3uEbPj5OtuVV4",
-        range: "RD Station!A2:T",
+        spreadsheetId: "1Gu8Lseeekr33yoLGuu6qfh-mAQxgg487sPSkx4io5Qo",
+        range: "AS IN SCRIPT!A2:T",
         valueInputOption: "USER_ENTERED",
         responseValueRenderOption: "FORMATTED_VALUE",
         insertDataOption: "INSERT_ROWS",

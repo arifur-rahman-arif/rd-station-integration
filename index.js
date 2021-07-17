@@ -1,4 +1,5 @@
 const express = require("express");
+const fs = require("fs");
 const app = express();
 const { google } = require("googleapis");
 const { authorizeGoogleSheet, googleClient } = require("./sheetAuthorization");
@@ -23,10 +24,45 @@ const customParser = express.json({
 });
 
 app.post("/rd-station", customParser, (req, res) => {
-    // console.log(JSON.stringify(req.body, null, 4));
     let requiredData = organizeData(req.body);
     sendDataToSheet(requiredData);
     res.status(200).end();
+});
+
+app.post("/bulk-integration", customParser, (req, res) => {
+    let requiredData = organizeData(req.body);
+
+    fs.readFile("data.json", "utf8", function (err, data) {
+        if (err) {
+            return console.trace(err);
+        }
+
+        let savedData = [];
+
+        if (data) {
+            savedData = JSON.parse(data);
+        }
+
+        savedData.push(requiredData[0]);
+
+        fs.writeFile("data.json", JSON.stringify(savedData), function (error, response) {
+            if (error) {
+                return console.trace(err);
+            }
+            console.trace("data stored successfully");
+        });
+    });
+
+    res.status(200).end();
+});
+
+app.get("/bulk-data-form", customParser, (req, res) => {
+    let totalLead = bulkInsertionDataArray().length;
+    res.status(200).send(formLayout(totalLead)).end();
+});
+
+app.post("/insert-bulk-data", customParser, (req, res) => {
+    sendBulkDataToSheet(res);
 });
 
 const organizeData = (rdStationData) => {
@@ -105,29 +141,120 @@ const insertDataIntoSheet = async (data) => {
 
 const insertionValuesForSheet = (data) => {
     insertionValues = [
-        data.createdAt,
-        data.email,
-        data.name,
-        data.opportunity,
-        data.firstConversionDate,
-        data.firstConversionIdentificator,
-        data.firstConversionSource,
-        data.firstConversionMedium,
-        data.firstConversionCampaign,
-        data.firstConversionChannel,
-        data.lastConversionDate,
-        data.lastConversionIdentificator,
-        data.lastConversionSource,
-        data.lastConversionMedium,
-        data.lastConversionCampaign,
-        data.lastConversionChannel,
-        data.leadStage,
-        data.lastMarkedOpportunityDate,
-        data.fitScore,
-        data.interest,
+        `${data.createdAt}`,
+        `${data.email}`,
+        `${data.name}`,
+        `${data.opportunity}`,
+        `${data.firstConversionDate}`,
+        `${data.firstConversionIdentificator}`,
+        `${data.firstConversionSource}`,
+        `${data.firstConversionMedium}`,
+        `${data.firstConversionCampaign}`,
+        `${data.firstConversionChannel}`,
+        `${data.lastConversionDate}`,
+        `${data.lastConversionIdentificator}`,
+        `${data.lastConversionSource}`,
+        `${data.lastConversionMedium}`,
+        `${data.lastConversionCampaign}`,
+        `${data.lastConversionChannel}`,
+        `${data.leadStage}`,
+        `${data.lastMarkedOpportunityDate}`,
+        `${data.fitScore}`,
+        `${data.interest}`,
     ];
 
     return insertionValues;
+};
+
+const formLayout = (totalData) => {
+    let form = `
+        <style>
+            button {
+                position: absolute;
+                top: 10%;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 20px;
+                padding: 10px 20px;
+                outline: none;
+                border: none;
+                background: #26fb26;
+                border-radius: 10px;
+                text-transform: uppercase;
+                cursor: pointer;
+            }
+        </style>
+        <form action="./insert-bulk-data" method="POST">
+            <button type="submit" class="btn btn-primary">Insert Data (${totalData})</button>
+        </form>
+    `;
+
+    return form;
+};
+
+const sendBulkDataToSheet = async (res) => {
+    let isSheetValidated = await authorizeGoogleSheet();
+
+    if (!isSheetValidated.access_token) {
+        console.trace("Google sheet could not be validated");
+    }
+
+    let insertData = bulkInsertionDataArray();
+
+    const sheets = google.sheets({ version: "v4", auth: googleClient });
+    const sheetInsertOptions = {
+        spreadsheetId: "1P8IO9GiBqyrjfP_CMGHYE_sQiOAMk-3uEbPj5OtuVV4",
+        range: "RD Station!A2:T",
+        valueInputOption: "USER_ENTERED",
+        responseValueRenderOption: "FORMATTED_VALUE",
+        insertDataOption: "INSERT_ROWS",
+        resource: {
+            values: insertData,
+            majorDimension: "ROWS",
+        },
+    };
+
+    try {
+        const sheetResponse = await sheets.spreadsheets.values.append(sheetInsertOptions);
+        if (sheetResponse.status == 200) {
+            console.trace("data inserted in sheet");
+            emptyLeadData();
+            res.status(200).send("<i><h3>Data inserted into google sheet</h3></i>").end();
+        } else {
+            res.status(200).send("<i><h3>Data Insertion Failed</h3></i>").end();
+        }
+    } catch (err) {
+        console.trace(err);
+    }
+};
+
+const bulkInsertionDataArray = () => {
+    let data = fs.readFileSync("data.json", "utf8");
+
+    let savedData = [];
+
+    if (data) {
+        savedData = JSON.parse(data);
+    }
+
+    let formattedArray = [];
+
+    if (savedData) {
+        savedData.forEach((lead) => {
+            formattedArray.push(insertionValuesForSheet(lead));
+        });
+
+        return formattedArray;
+    }
+};
+
+const emptyLeadData = () => {
+    fs.writeFile("data.json", JSON.stringify([]), function (error, response) {
+        if (error) {
+            return console.trace(err);
+        }
+        console.trace("data deleted successfully");
+    });
 };
 
 // lt -p 3000 -s rdstationapitesting12345

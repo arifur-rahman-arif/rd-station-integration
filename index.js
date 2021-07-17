@@ -50,7 +50,7 @@ app.post("/bulk-integration", customParser, (req, res) => {
     res.status(200).end();
 });
 
-app.get("/bulk-data-form", customParser, (req, res) => {
+app.get("/", customParser, (req, res) => {
     let totalLead = bulkInsertionDataArray().length;
     res.status(200).send(formLayout(totalLead)).end();
 });

@@ -31,40 +31,22 @@ app.post("/rd-station", customParser, (req, res) => {
 
 app.post("/bulk-integration", customParser, (req, res) => {
     let requiredData = organizeData(req.body);
-
+    const currentDate = new Date();
+    const timestamp = currentDate.getTime();
     try {
-        fs.readFile("data.json", "utf8", function (err, data) {
-            if (err) {
-                return console.trace(err);
-            }
-
-            let savedData = [];
-
-            if (typeof data != undefined && typeof data != null) {
-                savedData = JSON.parse(data);
-
-                savedData.push(requiredData[0]);
-
-                try {
-                    fs.writeFile(
-                        "data.json",
-                        JSON.stringify(savedData),
-                        function (error, response) {
-                            if (error) {
-                                return console.trace(err);
-                            }
-                            console.trace("data stored successfully");
-                        }
-                    );
-                } catch (error) {
-                    console.trace(error);
+        fs.writeFile(
+            `lead/data_${timestamp}.json`,
+            JSON.stringify(requiredData[0]),
+            function (error, response) {
+                if (error) {
+                    return console.trace(error);
                 }
+                console.trace("data stored successfully");
             }
-        });
+        );
     } catch (error) {
         console.trace(error);
     }
-
     res.status(200).end();
 });
 
@@ -242,35 +224,41 @@ const sendBulkDataToSheet = async (res) => {
 
 const bulkInsertionDataArray = () => {
     try {
-        let data = fs.readFileSync("data.json", "utf8");
-
-        let savedData = [];
-
-        if (data) {
-            savedData = JSON.parse(data);
-        }
-
         let formattedArray = [];
 
-        if (savedData) {
-            savedData.forEach((lead) => {
-                formattedArray.push(insertionValuesForSheet(lead));
-            });
+        let allFiles = fs.readdirSync("./lead");
 
-            return formattedArray;
-        }
+        if (!allFiles) return console.trace("no file found");
+
+        allFiles.forEach((file) => {
+            let data = fs.readFileSync(`lead/${file}`, "utf8");
+
+            if (data) {
+                let savedData = JSON.parse(data);
+                formattedArray.push(insertionValuesForSheet(savedData));
+            }
+        });
+
+        return formattedArray;
     } catch (error) {
         console.trace(error);
     }
 };
 
 const emptyLeadData = () => {
-    fs.writeFile("data.json", JSON.stringify([]), function (error, response) {
-        if (error) {
-            return console.trace(err);
+    fs.readdir("./lead", (err, files) => {
+        if (err) throw err;
+
+        for (const file of files) {
+            fs.unlink(`./lead/${file}`, (err) => {
+                if (err) throw err;
+            });
         }
-        console.trace("data deleted successfully");
     });
 };
 
 // lt -p 3000 -s rdstationapitesting12345
+
+// let allFiles = fs.readdirSync("./lead");
+
+// console.log(allFiles);

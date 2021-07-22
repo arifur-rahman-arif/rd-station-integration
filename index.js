@@ -229,16 +229,28 @@ const bulkInsertionDataArray = () => {
 
     if (!allFiles) return console.trace("no file found");
 
-    allFiles.forEach((file) => {
-        let data = fs.readFileSync(`lead/${file}`, "utf8");
-
-        if (data) {
-            let savedData = JSON.parse(data);
-            formattedArray.push(insertionValuesForSheet(savedData));
+    allFiles.forEach((file, index) => {
+        if (fs.existsSync(`lead/${file}`)) {
+            let data = fs.readFileSync(`lead/${file}`, "utf-8");
+            if (data) {
+                if (isValidJSONString(data)) {
+                    let savedData = JSON.parse(data);
+                    formattedArray.push(insertionValuesForSheet(savedData));
+                }
+            }
         }
     });
 
     return formattedArray;
+};
+
+const isValidJSONString = (str) => {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
 };
 
 const emptyLeadData = () => {
@@ -252,9 +264,3 @@ const emptyLeadData = () => {
         }
     });
 };
-
-// lt -p 3000 -s rdstationapitesting12345
-
-// let allFiles = fs.readdirSync("./lead");
-
-// console.log(allFiles);

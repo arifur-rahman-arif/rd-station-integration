@@ -223,26 +223,22 @@ const sendBulkDataToSheet = async (res) => {
 };
 
 const bulkInsertionDataArray = () => {
-    try {
-        let formattedArray = [];
+    let formattedArray = [];
 
-        let allFiles = fs.readdirSync("./lead");
+    let allFiles = fs.readdirSync("./lead");
 
-        if (!allFiles) return console.trace("no file found");
+    if (!allFiles) return console.trace("no file found");
 
-        allFiles.forEach((file) => {
-            let data = fs.readFileSync(`lead/${file}`, "utf8");
+    allFiles.forEach((file) => {
+        let data = fs.readFileSync(`lead/${file}`, "utf8");
 
-            if (data) {
-                let savedData = JSON.parse(data);
-                formattedArray.push(insertionValuesForSheet(savedData));
-            }
-        });
+        if (data) {
+            let savedData = JSON.parse(data);
+            formattedArray.push(insertionValuesForSheet(savedData));
+        }
+    });
 
-        return formattedArray;
-    } catch (error) {
-        console.trace(error);
-    }
+    return formattedArray;
 };
 
 const emptyLeadData = () => {

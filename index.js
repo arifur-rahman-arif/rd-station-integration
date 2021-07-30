@@ -23,7 +23,7 @@ const customParser = express.json({
     },
 });
 
-app.post("/rd-station", customParser, (req, res) => {
+app.post("/single-integration", customParser, (req, res) => {
     let requiredData = organizeData(req.body);
     sendDataToSheet(requiredData);
     res.status(200).end();
@@ -64,31 +64,52 @@ const organizeData = (rdStationData) => {
 
     if (!rdStationData.leads) return console.trace(`Data is empty at ${rdStationData}`);
 
-    rdStationData.leads.forEach((data) => {
+    rdStationData.leads.forEach((lead) => {
         orgnizedData.push({
-            createdAt: data.created_at,
-            email: data.email,
-            name: data.name,
-            opportunity: data.opportunity,
-            firstConversionDate: data.first_conversion.content.created_at,
-            firstConversionIdentificator: data.first_conversion.content.identificador,
-            firstConversionSource: data.first_conversion.conversion_origin.source,
-            firstConversionMedium: data.first_conversion.conversion_origin.medium,
-            firstConversionCampaign: data.first_conversion.conversion_origin.campaign,
-            firstConversionChannel: data.first_conversion.conversion_origin.channel,
-            lastConversionDate: data.last_conversion.content.created_at,
-            lastConversionIdentificator: data.last_conversion.content.identificador,
-            lastConversionSource: data.last_conversion.conversion_origin.source,
-            lastConversionMedium: data.last_conversion.conversion_origin.medium,
-            lastConversionChannel: data.last_conversion.conversion_origin.channel,
-            lastConversionCampaign: data.last_conversion.conversion_origin.campaign,
-            leadStage: data.lead_stage,
-            lastMarkedOpportunityDate:
-                data.last_marked_opportunity_date == null
-                    ? "null"
-                    : data.last_marked_opportunity_date,
-            fitScore: data.fit_score,
-            interest: data.interest,
+            Email: lead.email,
+            "Estágio no funil": lead.lead_stage || null,
+            "Data da última oportunidade": lead.last_marked_opportunity_date || null,
+            "Data da última venda": lead.last_sale_date || null,
+            "Valor da última venda": lead.last_sale_value_date || null,
+            "Lead Scoring - Perfil": lead.fit_score || null,
+            "Lead Scoring - Interesse": lead.interest || null,
+            "Data da primeira conversão": lead.first_conversion.created_at || null,
+            "Identificador da primeira conversão":
+                lead.first_conversion.content.identificador || null,
+            "Fonte da primeira conversão": lead.first_conversion.conversion_origin.source || null,
+            "Meio da primeira conversão": lead.first_conversion.conversion_origin.medium || null,
+            "Campanha da primeira conversão":
+                lead.first_conversion.conversion_origin.campaign || null,
+            "Canal da primeira conversão": lead.first_conversion.conversion_origin.channel || null,
+            "Data da última conversão": lead.last_conversion.created_at || null,
+            "Identificador da última conversão":
+                lead.last_conversion.conversion_origin.source || null,
+            "Fonte da última conversão": lead.last_conversion.conversion_origin.source || null,
+            "Meio da última conversão": lead.last_conversion.conversion_origin.medium || null,
+            "Campanha da última conversão": lead.last_conversion.conversion_origin.campaign || null,
+            "Canal da última conversão": lead.last_conversion.conversion_origin.channel || null,
+            "Etapa do funil de vendas no CRM (última atualização)":
+                lead.custom_fields["[CRM] Etapa do funil de vendas no CRM (última atualização)"] ||
+                null,
+            "Funil de vendas no CRM (última atualização)":
+                lead.custom_fields["Funil de vendas no CRM (última atualização)"] || null,
+            "Motivo de Perda no RD Station CRM": null,
+            "Nome do responsável pela Oportunidade no CRM (última atualização)":
+                lead.custom_fields[
+                    "[CRM] Nome do responsável pela Oportunidade no CRM (última atualização)"
+                ] || null,
+            Origem: lead.last_conversion.conversion_origin.channel || null,
+            "Origem da Oportunidade no CRM (última atualização)":
+                lead.custom_fields["[CRM] Origem da Oportunidade no CRM (última atualização)"] ||
+                null,
+            "Qualificação da Oportunidade no CRM (última atualização)":
+                lead.custom_fields[
+                    "[CRM] Qualificação da Oportunidade no CRM (última atualização)"
+                ] || null,
+            "Valor total da Oportunidade no CRM (última atualização)":
+                lead.custom_fields[
+                    "[CRM] Valor total da Oportunidade no CRM (última atualização)"
+                ] || null,
         });
     });
 
@@ -113,7 +134,7 @@ const insertDataIntoSheet = async (data) => {
     const sheets = google.sheets({ version: "v4", auth: googleClient });
     const sheetInsertOptions = {
         spreadsheetId: "1Gu8Lseeekr33yoLGuu6qfh-mAQxgg487sPSkx4io5Qo",
-        range: "AS IN SCRIPT!A2:T",
+        range: "COLUMN DEFINED!A2:A",
         valueInputOption: "USER_ENTERED",
         responseValueRenderOption: "FORMATTED_VALUE",
         insertDataOption: "INSERT_ROWS",
@@ -135,26 +156,33 @@ const insertDataIntoSheet = async (data) => {
 
 const insertionValuesForSheet = (data) => {
     insertionValues = [
-        `${data.createdAt}`,
-        `${data.email}`,
-        `${data.name}`,
-        `${data.opportunity}`,
-        `${data.firstConversionDate}`,
-        `${data.firstConversionIdentificator}`,
-        `${data.firstConversionSource}`,
-        `${data.firstConversionMedium}`,
-        `${data.firstConversionCampaign}`,
-        `${data.firstConversionChannel}`,
-        `${data.lastConversionDate}`,
-        `${data.lastConversionIdentificator}`,
-        `${data.lastConversionSource}`,
-        `${data.lastConversionMedium}`,
-        `${data.lastConversionCampaign}`,
-        `${data.lastConversionChannel}`,
-        `${data.leadStage}`,
-        `${data.lastMarkedOpportunityDate}`,
-        `${data.fitScore}`,
-        `${data.interest}`,
+        `${data["Email"]}`, // Column A
+        `${data["Estágio no funil"]}`, // Column B
+        `${data["Data da última oportunidade"]}`, // Column C
+        `${data["Data da última venda"]}`, // Column D
+        `${data["Valor da última venda"]}`, // Column E
+        `${data["Lead Scoring - Perfil"]}`, // Column F
+        `${data["Lead Scoring - Interesse"]}`, // Column G
+        `${data["Data da primeira conversão"]}`, // Column H
+        `${data["Identificador da primeira conversão"]}`, // Column I
+        `${data["Fonte da primeira conversão"]}`, // Column J
+        `${data["Meio da primeira conversão"]}`, // Column K
+        `${data["Campanha da primeira conversão"]}`, // Column L
+        `${data["Canal da primeira conversão"]}`, // Column M
+        `${data["Data da última conversão"]}`, // Column N
+        `${data["Identificador da última conversão"]}`, // Column O
+        `${data["Fonte da última conversão"]}`, // Column p
+        `${data["Meio da última conversão"]}`, // Column Q
+        `${data["Campanha da última conversão"]}`, // Column R
+        `${data["Canal da última conversão"]}`, // Column S
+        `${data["Etapa do funil de vendas no CRM (última atualização)"]}`, // Column T
+        `${data["Funil de vendas no CRM (última atualização)"]}`, // Column U
+        `${data["Motivo de Perda no RD Station CRM"]}`, // Column V
+        `${data["Nome do responsável pela Oportunidade no CRM (última atualização)"]}`, // Column W
+        `${data["Origem"]}`, // Column X
+        `${data["Origem da Oportunidade no CRM (última atualização)"]}`, // Column Y
+        `${data["Qualificação da Oportunidade no CRM (última atualização)"]}`, // Column Z
+        `${data["Valor total da Oportunidade no CRM (última atualização)"]}`, // Column AA
     ];
 
     return insertionValues;
@@ -198,7 +226,7 @@ const sendBulkDataToSheet = async (res) => {
     const sheets = google.sheets({ version: "v4", auth: googleClient });
     const sheetInsertOptions = {
         spreadsheetId: "1Gu8Lseeekr33yoLGuu6qfh-mAQxgg487sPSkx4io5Qo",
-        range: "AS IN SCRIPT!A2:T",
+        range: "COLUMN DEFINED!A2:T",
         valueInputOption: "USER_ENTERED",
         responseValueRenderOption: "FORMATTED_VALUE",
         insertDataOption: "INSERT_ROWS",

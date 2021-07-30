@@ -1,0 +1,284 @@
+// // 1st row of data
+
+// {
+//     "leads": [
+//         {
+//             "id": "554822057",
+//             "email": "a.j.junior@hotmail.com",
+//             "name": "Almeri Adur Junior",
+//             "company": null,
+//             "job_title": null,
+//             "bio": null,
+//             "public_url": "http://app.rdstation.com.br/leads/public/fb1eda01-7bd4-4bfe-958e-480f0d07e878",
+//             "created_at": "2019-05-28T18:38:21.434-03:00",
+//             "opportunity": "false",
+//             "number_conversions": "1",
+//             "user": null,
+//             "first_conversion": {
+//                 "content": {
+//                     "identificador": "Nyan Viktor - Preço",
+//                     "traffic_source": "utm_source=Facebook%20Ads&utm_medium=social",
+//                     "Mensagem para consultor": "tenho interesse",
+//                     "Em quanto tempo você pretende comprar seu novo imóvel?": "1 mês",
+//                     "Por meio de qual canal você prefere ser contactado?": "Telefone",
+//                     "nome": "Almeri Adur Junior",
+//                     "cidade": "balneario camboriu",
+//                     "telefone": "+5547999097320",
+//                     "email_lead": "a.j.junior@hotmail.com",
+//                     "Cidade": "Balneário Camboriú",
+//                     "Estado": "SC"
+//                 },
+//                 "created_at": "2019-05-28T18:38:21.514-03:00",
+//                 "cumulative_sum": "1",
+//                 "source": "Nyan Viktor - Preço",
+//                 "conversion_origin": {
+//                     "source": "Facebook Ads",
+//                     "medium": "social",
+//                     "value": null,
+//                     "campaign": null,
+//                     "channel": "Social"
+//                 }
+//             },
+//             "last_conversion": {
+//                 "content": {
+//                     "identificador": "Nyan Viktor - Preço",
+//                     "traffic_source": "utm_source=Facebook%20Ads&utm_medium=social",
+//                     "Mensagem para consultor": "tenho interesse",
+//                     "Em quanto tempo você pretende comprar seu novo imóvel?": "1 mês",
+//                     "Por meio de qual canal você prefere ser contactado?": "Telefone",
+//                     "nome": "Almeri Adur Junior",
+//                     "cidade": "balneario camboriu",
+//                     "telefone": "+5547999097320",
+//                     "email_lead": "a.j.junior@hotmail.com",
+//                     "Cidade": "Balneário Camboriú",
+//                     "Estado": "SC"
+//                 },
+//                 "created_at": "2019-05-28T18:38:21.514-03:00",
+//                 "cumulative_sum": "1",
+//                 "source": "Nyan Viktor - Preço",
+//                 "conversion_origin": {
+//                     "source": "Facebook Ads",
+//                     "medium": "social",
+//                     "value": null,
+//                     "campaign": null,
+//                     "channel": "Social"
+//                 }
+//             },
+//             "custom_fields": {
+//                 "Mensagem para consultor": "tenho interesse",
+//                 "Em quanto tempo você pretende comprar seu novo imóvel?": "1 mês",
+//                 "Por meio de qual canal você prefere ser contactado?": "Telefone"
+//             },
+//             "website": null,
+//             "personal_phone": "+5547999097320",
+//             "mobile_phone": null,
+//             "city": "Balneário Camboriú",
+//             "state": "SC",
+//             "tags": ["1mes", "quente"],
+//             "lead_stage": "Lead",
+//             "last_marked_opportunity_date": null,
+//             "uuid": "fb1eda01-7bd4-4bfe-958e-480f0d07e878",
+//             "fit_score": "b",
+//             "interest": 0
+//         }
+//     ]
+// }
+
+// // 2nd row of data
+
+// {
+//     "leads": [
+//         {
+//             "id": "335865270",
+//             "email": "a.zatera@gmail.com",
+//             "name": "Alexandre Zatera",
+//             "company": null,
+//             "job_title": null,
+//             "bio": null,
+//             "public_url": "http://app.rdstation.com.br/leads/public/91a3fd78-4fb9-480c-ada5-1ec18d2f6487",
+//             "created_at": "2018-07-01T12:35:07.979-03:00",
+//             "opportunity": "true",
+//             "number_conversions": "1",
+//             "user": null,
+//             "first_conversion": {
+//                 "content": {
+//                     "identificador": "Decorados - Terreno Marcatto",
+//                     "traffic_source": "utm_source=Facebook%20Ads&utm_medium=social",
+//                     "Mensagem para consultor": "Viver bem e em paz",
+//                     "nome": "Alexandre Zatera",
+//                     "cidade": "Curitiba",
+//                     "telefone": "+5547997799096",
+//                     "email_lead": "a.zatera@gmail.com",
+//                     "estado": "PR"
+//                 },
+//                 "created_at": "2018-07-01T12:35:08.057-03:00",
+//                 "cumulative_sum": "1",
+//                 "source": "Decorados - Terreno Marcatto",
+//                 "conversion_origin": {
+//                     "source": "Facebook Ads",
+//                     "medium": "social",
+//                     "value": null,
+//                     "campaign": null,
+//                     "channel": "Social"
+//                 }
+//             },
+//             "last_conversion": {
+//                 "content": {
+//                     "identificador": "Decorados - Terreno Marcatto",
+//                     "traffic_source": "utm_source=Facebook%20Ads&utm_medium=social",
+//                     "Mensagem para consultor": "Viver bem e em paz",
+//                     "nome": "Alexandre Zatera",
+//                     "cidade": "Curitiba",
+//                     "telefone": "+5547997799096",
+//                     "email_lead": "a.zatera@gmail.com",
+//                     "estado": "PR"
+//                 },
+//                 "created_at": "2018-07-01T12:35:08.057-03:00",
+//                 "cumulative_sum": "1",
+//                 "source": "Decorados - Terreno Marcatto",
+//                 "conversion_origin": {
+//                     "source": "Facebook Ads",
+//                     "medium": "social",
+//                     "value": null,
+//                     "campaign": null,
+//                     "channel": "Social"
+//                 }
+//             },
+//             "custom_fields": {
+//                 "Mensagem para consultor": "Viver bem e em paz"
+//             },
+//             "website": null,
+//             "personal_phone": "+5547997799096",
+//             "mobile_phone": null,
+//             "city": "Curitiba",
+//             "state": "PR",
+//             "tags": [],
+//             "lead_stage": "Lead Qualificado",
+//             "last_marked_opportunity_date": "2018-10-08T15:39:24.142-03:00",
+//             "uuid": "91a3fd78-4fb9-480c-ada5-1ec18d2f6487",
+//             "fit_score": "d",
+//             "interest": 25
+//         }
+//     ]
+// }
+
+// // 3rd row data
+
+{
+    "leads": [
+        {
+            "id": "1579552915",
+            "email": "djefep@yahoo.com.br",
+            "name": "Djeferson Parizotto",
+            "company": "djefep@yahoo.com.br",
+            "job_title": null,
+            "bio": null,
+            "public_url": "http://app.rdstation.com.br/leads/public/8b2454e5-69ff-49d7-bbd4-1a1c6bfa3e9f",
+            "created_at": "2021-06-10T02:32:48.055-03:00",
+            "opportunity": "false",
+            "number_conversions": "15",
+            "user": "centralbrava@procave.com.br",
+            "first_conversion": {
+                "content": {
+                    "identificador": "whatsapp-fischer-dreams",
+                    "traffic_source": "encoded_eyJmaXJzdF9zZXNzaW9uIjp7InZhbHVlIjoiaHR0cHM6Ly9wcm9jYXZlLmNvbS5ici9pbW92ZWlzLWEtdmVuZGEvIiwiZXh0cmFfcGFyYW1zIjp7fX0sImN1cnJlbnRfc2Vzc2lvbiI6eyJ2YWx1ZSI6Iihub25lKSIsImV4dHJhX3BhcmFtcyI6e319LCJjcmVhdGVkX2F0IjoxNjIzMzAxOTAyNTAwfQ==",
+                    "_doe": "",
+                    "created_at": "2021-06-10T05:32:48.055260Z",
+                    "ip": "107.150.38.250",
+                    "email_lead": "djefep@yahoo.com.br",
+                    "Telefone": "+86 150 5804 3015",
+                    "UF": null,
+                    "Nome Completo": "Djeferson Parizotto",
+                    "CPF": "05389957938",
+                    "Interessado como": "Quero comprar um imóvel"
+                },
+                "created_at": "2021-06-10T02:32:48.055-03:00",
+                "cumulative_sum": "1",
+                "source": "whatsapp-fischer-dreams",
+                "conversion_origin": {
+                    "source": "(direct)",
+                    "medium": "(none)",
+                    "value": null,
+                    "campaign": "(direct)",
+                    "channel": "Direct"
+                }
+            },
+            "last_conversion": {
+                "content": {
+                    "event_type": "OPPORTUNITY_UPDATED",
+                    "event_identifier": "Oportunidade atualizada no RD Station CRM",
+                    "identificador": "Oportunidade atualizada no RD Station CRM",
+                    "event_timestamp": null,
+                    "updated_at": "2021-06-17T14:19:22Z",
+                    "owner": "rodrigo.caldas@procave.com.br",
+                    "funnel_stage": "Negociação",
+                    "opportunity_value": 10544529.53,
+                    "opportunity_url": "https://plugcrm.net/app/#/deals/60c1a4235b2c7c0001bbbb23",
+                    "opportunity_score": 5,
+                    "funnel": "Funil Padrão",
+                    "opportunity_title": "Oportunidade atualizada no RD Station CRM",
+                    "opportunity_origin": "Tráfego Direto",
+                    "mark_opportunity": false,
+                    "__cdp__original_event": {
+                        "event_batch_uuid": "50293ff3-2338-46e3-891c-0e7ba4edc44c",
+                        "event_batch_index": 0,
+                        "event_identifier": "Oportunidade atualizada no RD Station CRM",
+                        "event_uuid": "f3bc6738-6dbd-43bc-b557-16885415c06b",
+                        "event_type": "OPPORTUNITY_UPDATED",
+                        "event_family": "CDP",
+                        "event_timestamp": null,
+                        "payload": {
+                            "updated_at": "2021-06-17T14:19:22Z",
+                            "email": "djefep@yahoo.com.br",
+                            "contact_owner_email": "rodrigo.caldas@procave.com.br",
+                            "name": "Djeferson Parizotto",
+                            "funnel_stage": "Negociação",
+                            "opportunity_value": 10544529.53,
+                            "opportunity_url": "https://plugcrm.net/app/#/deals/60c1a4235b2c7c0001bbbb23",
+                            "opportunity_score": 5,
+                            "funnel": "Funil Padrão",
+                            "opportunity_title": "Oportunidade atualizada no RD Station CRM",
+                            "opportunity_origin": "Tráfego Direto",
+                            "mark_opportunity": false
+                        }
+                    },
+                    "email_lead": "djefep@yahoo.com.br",
+                    "Nome": "Djeferson Parizotto",
+                    "UF": null
+                },
+                "created_at": "2021-06-17T11:19:57.151-03:00",
+                "cumulative_sum": "15",
+                "source": "Oportunidade atualizada no RD Station CRM",
+                "conversion_origin": {
+                    "source": "unknown",
+                    "medium": "unknown",
+                    "value": null,
+                    "campaign": "unknown",
+                    "channel": "Unknown"
+                }
+            },
+            "custom_fields": {
+                "[CRM] Origem da Oportunidade no CRM (última atualização)": "Tráfego Direto",
+                "[CRM] Qualificação da Oportunidade no CRM (última atualização)": "5",
+                "[CRM] Etapa do funil de vendas no CRM (última atualização)": "Negociação",
+                "[CRM] Valor total da Oportunidade no CRM (última atualização)": "10544529.53",
+                "[CRM] Nome do responsável pela Oportunidade no CRM (última atualização)": "Rodrigo Caldas",
+                "CPF": "05389957938",
+                "Interessado como": "Quero comprar um imóvel",
+                "Nome Completo": "Djeferson Parizotto",
+                "Funil de vendas no CRM (última atualização)": "Funil Padrão"
+            },
+            "website": null,
+            "personal_phone": "+86 150 5804 3015",
+            "mobile_phone": null,
+            "city": null,
+            "state": null,
+            "tags": null,
+            "lead_stage": "Cliente",
+            "last_marked_opportunity_date": "2021-06-11T15:40:50.117-03:00",
+            "uuid": "8b2454e5-69ff-49d7-bbd4-1a1c6bfa3e9f",
+            "fit_score": "d",
+            "interest": 0
+        }
+    ]
+}

@@ -25,6 +25,7 @@ const customParser = express.json({
 
 app.post("/single-integration", customParser, (req, res) => {
     let requiredData = organizeData(req.body);
+    console.log(requiredData);
     sendDataToSheet(requiredData);
     res.status(200).end();
 });
@@ -305,25 +306,25 @@ const monthName = () => {
     return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 };
 
-const formatAMPM = (date) => {
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    var ampm = hours >= 12 ? "pm" : "am";
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    var strTime = hours + ":" + minutes + " " + ampm;
-    return strTime;
-};
+// const formatAMPM = (date) => {
+//     var hours = date.getHours();
+//     var minutes = date.getMinutes();
+//     var ampm = hours >= 12 ? "pm" : "am";
+//     hours = hours % 12;
+//     hours = hours ? hours : 12; // the hour '0' should be '12'
+//     minutes = minutes < 10 ? "0" + minutes : minutes;
+//     var strTime = hours + ":" + minutes + " " + ampm;
+//     return strTime;
+// };
 
 const formatDate = (timestamp) => {
     let dateObj = new Date(timestamp);
     let year = dateObj.getFullYear();
-    let month = monthName()[dateObj.getMonth()];
-    let day = dateObj.getDate();
-    let hours = dateObj.getHours();
-    let min = dateObj.getMinutes();
+    let month = (dateObj.getMonth() + 1).toString().padStart(2, 0);
+    let day = dateObj.getDate().toString().padStart(2, 0);
+    let hours = dateObj.getHours().toString().padStart(2, 0);
+    let min = dateObj.getMinutes().toString().padStart(2, 0);
     let seconds = dateObj.getSeconds();
 
-    return `${day}/${month}/${year} ${formatAMPM(dateObj)}`;
+    return `${day}/${month}/${year} ${hours}:${min}`;
 };

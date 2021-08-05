@@ -143,7 +143,7 @@ const insertDataIntoSheet = async (data) => {
     const sheets = google.sheets({ version: "v4", auth: googleClient });
     const sheetInsertOptions = {
         spreadsheetId: "1Gu8Lseeekr33yoLGuu6qfh-mAQxgg487sPSkx4io5Qo",
-        range: "COLUMN DEFINED!A2:A",
+        range: "Marketing!A2:A",
         valueInputOption: "USER_ENTERED",
         responseValueRenderOption: "FORMATTED_VALUE",
         insertDataOption: "INSERT_ROWS",
@@ -235,7 +235,7 @@ const sendBulkDataToSheet = async (res) => {
     const sheets = google.sheets({ version: "v4", auth: googleClient });
     const sheetInsertOptions = {
         spreadsheetId: "1Gu8Lseeekr33yoLGuu6qfh-mAQxgg487sPSkx4io5Qo",
-        range: "COLUMN DEFINED!A2:T",
+        range: "Marketing!A2:T",
         valueInputOption: "USER_ENTERED",
         responseValueRenderOption: "FORMATTED_VALUE",
         insertDataOption: "INSERT_ROWS",

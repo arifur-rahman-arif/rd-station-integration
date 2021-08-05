@@ -68,12 +68,18 @@ const organizeData = (rdStationData) => {
         orgnizedData.push({
             Email: lead.email,
             "Estágio no funil": lead.lead_stage || null,
-            "Data da última oportunidade": lead.last_marked_opportunity_date || null,
-            "Data da última venda": lead.last_sale_date || null,
-            "Valor da última venda": lead.last_sale_value_date || null,
+            "Data da última oportunidade": lead.last_marked_opportunity_date
+                ? formatDate(lead.last_marked_opportunity_date)
+                : null,
+            "Data da última venda": lead.last_sale_date ? formatDate(lead.last_sale_date) : null,
+            "Valor da última venda": lead.last_sale_value_date
+                ? formatDate(lead.last_sale_value_date)
+                : null,
             "Lead Scoring - Perfil": lead.fit_score || null,
             "Lead Scoring - Interesse": lead.interest || null,
-            "Data da primeira conversão": lead.first_conversion.created_at || null,
+            "Data da primeira conversão": lead.first_conversion.created_at
+                ? formatDate(lead.first_conversion.created_at)
+                : null,
             "Identificador da primeira conversão":
                 lead.first_conversion.content.identificador || null,
             "Fonte da primeira conversão": lead.first_conversion.conversion_origin.source || null,
@@ -81,7 +87,9 @@ const organizeData = (rdStationData) => {
             "Campanha da primeira conversão":
                 lead.first_conversion.conversion_origin.campaign || null,
             "Canal da primeira conversão": lead.first_conversion.conversion_origin.channel || null,
-            "Data da última conversão": lead.last_conversion.created_at || null,
+            "Data da última conversão": lead.last_conversion.created_at
+                ? formatDate(lead.last_conversion.created_at)
+                : null,
             "Identificador da última conversão":
                 lead.last_conversion.conversion_origin.source || null,
             "Fonte da última conversão": lead.last_conversion.conversion_origin.source || null,
@@ -291,4 +299,31 @@ const emptyLeadData = () => {
             });
         }
     });
+};
+
+const monthName = () => {
+    return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+};
+
+const formatAMPM = (date) => {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    var strTime = hours + ":" + minutes + " " + ampm;
+    return strTime;
+};
+
+const formatDate = (timestamp) => {
+    let dateObj = new Date(timestamp);
+    let year = dateObj.getFullYear();
+    let month = monthName()[dateObj.getMonth()];
+    let day = dateObj.getDate();
+    let hours = dateObj.getHours();
+    let min = dateObj.getMinutes();
+    let seconds = dateObj.getSeconds();
+
+    return `${day}/${month}/${year} ${formatAMPM(dateObj)}`;
 };

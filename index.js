@@ -216,7 +216,7 @@ const formLayout = (totalData) => {
             }
         </style>
         <form action="./insert-bulk-data" method="POST">
-            <button type="submit" class="btn btn-primary">Insert Data (${totalData})</button>
+            <button type="submit" class="btn btn-primary">Clique para atualizar a planilha (${totalData} contatos encontrados)</button>
         </form>
     `;
 

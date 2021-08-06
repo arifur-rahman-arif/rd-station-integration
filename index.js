@@ -68,57 +68,57 @@ const organizeData = (rdStationData) => {
     rdStationData.leads.forEach((lead) => {
         orgnizedData.push({
             Email: lead.email,
-            "Estágio no funil": lead.lead_stage,
+            "Estágio no funil": lead.lead_stage || null,
             "Data da última oportunidade": lead.last_marked_opportunity_date
                 ? formatDate(lead.last_marked_opportunity_date)
-                :,
-            "Data da última venda": lead.last_sale_date ? formatDate(lead.last_sale_date) : ,
+                : null,
+            "Data da última venda": lead.last_sale_date ? formatDate(lead.last_sale_date) : null,
             "Valor da última venda": lead.last_sale_value_date
                 ? formatDate(lead.last_sale_value_date)
-                : ,
-            "Lead Scoring - Perfil": lead.fit_score || ,
-            "Lead Scoring - Interesse": lead.interest || ,
+                : null,
+            "Lead Scoring - Perfil": lead.fit_score || null,
+            "Lead Scoring - Interesse": lead.interest || null,
             "Data da primeira conversão": lead.first_conversion.created_at
                 ? formatDate(lead.first_conversion.created_at)
-                : ,
+                : null,
             "Identificador da primeira conversão":
-                lead.first_conversion.content.identificador || ,
-            "Fonte da primeira conversão": lead.first_conversion.conversion_origin.source || ,
-            "Meio da primeira conversão": lead.first_conversion.conversion_origin.medium || ,
+                lead.first_conversion.content.identificador || null,
+            "Fonte da primeira conversão": lead.first_conversion.conversion_origin.source || null,
+            "Meio da primeira conversão": lead.first_conversion.conversion_origin.medium || null,
             "Campanha da primeira conversão":
-                lead.first_conversion.conversion_origin.campaign || ,
-            "Canal da primeira conversão": lead.first_conversion.conversion_origin.channel || ,
+                lead.first_conversion.conversion_origin.campaign || null,
+            "Canal da primeira conversão": lead.first_conversion.conversion_origin.channel || null,
             "Data da última conversão": lead.last_conversion.created_at
                 ? formatDate(lead.last_conversion.created_at)
-                : ,
+                : null,
             "Identificador da última conversão":
-                lead.last_conversion.conversion_origin.source || ,
-            "Fonte da última conversão": lead.last_conversion.conversion_origin.source || ,
-            "Meio da última conversão": lead.last_conversion.conversion_origin.medium || ,
-            "Campanha da última conversão": lead.last_conversion.conversion_origin.campaign || ,
-            "Canal da última conversão": lead.last_conversion.conversion_origin.channel || ,
+                lead.last_conversion.conversion_origin.source || null,
+            "Fonte da última conversão": lead.last_conversion.conversion_origin.source || null,
+            "Meio da última conversão": lead.last_conversion.conversion_origin.medium || null,
+            "Campanha da última conversão": lead.last_conversion.conversion_origin.campaign || null,
+            "Canal da última conversão": lead.last_conversion.conversion_origin.channel || null,
             "Etapa do funil de vendas no CRM (última atualização)":
                 lead.custom_fields["[CRM] Etapa do funil de vendas no CRM (última atualização)"] ||
-                ,
+                null,
             "Funil de vendas no CRM (última atualização)":
-                lead.custom_fields["Funil de vendas no CRM (última atualização)"] || ,
-            "Motivo de Perda no RD Station CRM": ,
+                lead.custom_fields["Funil de vendas no CRM (última atualização)"] || null,
+            "Motivo de Perda no RD Station CRM": null,
             "Nome do responsável pela Oportunidade no CRM (última atualização)":
                 lead.custom_fields[
                     "[CRM] Nome do responsável pela Oportunidade no CRM (última atualização)"
-                ] || ,
-            Origem: lead.last_conversion.conversion_origin.channel || ,
+                ] || null,
+            Origem: lead.last_conversion.conversion_origin.channel || null,
             "Origem da Oportunidade no CRM (última atualização)":
                 lead.custom_fields["[CRM] Origem da Oportunidade no CRM (última atualização)"] ||
-                ,
+                null,
             "Qualificação da Oportunidade no CRM (última atualização)":
                 lead.custom_fields[
                     "[CRM] Qualificação da Oportunidade no CRM (última atualização)"
-                ] || ,
+                ] || null,
             "Valor total da Oportunidade no CRM (última atualização)":
                 lead.custom_fields[
                     "[CRM] Valor total da Oportunidade no CRM (última atualização)"
-                ] || ,
+                ] || null,
         });
     });
 

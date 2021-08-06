@@ -73,7 +73,7 @@ const organizeData = (rdStationData) => {
                 ? formatDate(lead.last_marked_opportunity_date)
                 : null,
             "Data da última venda": 
-            lead.custom_fields["Data da última venda"] ? formatDate(lead.custom_fields["Data da última venda"]) || null,
+            lead.custom_fields["Data da última venda"] ? formatDate(lead.custom_fields["Data da última venda"]) : null,
             "Valor da última venda": 
             lead.custom_fields["Valor da última venda"] || null,
             "Lead Scoring - Perfil": lead.fit_score || null,
